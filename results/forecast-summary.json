@@ -1,0 +1,13 @@
+{
+  "weeks": 407,
+  "first_week": "2019-01-06",
+  "last_week": "2026-10-18",
+  "pw_container_import_Q1_2024_vs_Q1_2023": -0.475,
+  "pw_port_calls_Q1_2024_vs_Q1_2023": -0.337,
+  "pw_container_calls_JanAug_2024_vs_2023": -0.717,
+  "pw_cargo_import_JanAug_2024_vs_2023": -0.381,
+  "pw_total_cargo_JanAug_2024_vs_2023": -0.354,
+  "pw_container_calls_2023": 367,
+  "pw_container_calls_2024": 134,
+  "pw_container_calls_2025": 483
+}

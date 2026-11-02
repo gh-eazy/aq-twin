@@ -1,0 +1,16 @@
+{
+  "yard_mean_min": 18.85,
+  "visits_per_teu": 0.421,
+  "travel_min": 6.67,
+  "yard_units": 24,
+  "tas_compliance": 0.8,
+  "reps": 20,
+  "days": 7,
+  "scenarios": {
+    "S1 Jul-2024 (calibration)": 1032,
+    "S2 2023 average": 1036,
+    "S3 9M-2026 average": 1211,
+    "S4 Dec-2025 record": 1305,
+    "S5 stress +30% on S4": 1696
+  }
+}
