@@ -1,3 +1,8 @@
 twin,planned_per_day,lanes,tas,planned_p95,actual_per_day,actual_gate_wait_mean,actual_gate_wait_p95,actual_turn_mean,actual_turn_p95,actual_trucks,actual_gate_wait_mean_ci,actual_gate_wait_p95_ci,actual_turn_mean_ci,actual_turn_p95_ci,actual_trucks_ci
-blind (AIS only),153,2,False,0.0,1032,15.08,56.52,42.56,86.51,7237.9,1.19,4.59,1.19,4.11,35.8
-trust-checked,1032,2,True,3.82,1032,0.89,3.82,28.21,47.26,7211.65,0.03,0.17,0.05,0.19,24.03
+blind (AIS only),153.0,2,False,0.0,1032,15.08,56.52,42.56,86.51,7237.9,1.19,4.59,1.19,4.11,35.8
+causal (Q1-2024 official),765.0,2,False,5.95,1032,15.08,56.52,42.56,86.51,7237.9,1.19,4.59,1.19,4.11,35.8
+oracle (Jul-2024 official),1032.0,2,True,3.82,1032,0.89,3.82,28.21,47.26,7211.65,0.03,0.17,0.05,0.19,24.03
+fixed 2 lanes,,2,False,,1032,15.08,56.52,42.56,86.51,7237.9,1.19,4.59,1.19,4.11,35.8
+fixed 3 lanes,,3,False,,1032,0.4,2.26,30.08,51.85,7237.9,0.03,0.13,0.37,1.1,35.8
+fixed 2 lanes + TAS,,2,True,,1032,0.89,3.82,28.21,47.26,7211.65,0.03,0.17,0.05,0.19,24.03
+fixed 3 lanes + TAS,,3,True,,1032,0.13,0.94,27.49,46.47,7211.65,0.0,0.03,0.04,0.15,24.03

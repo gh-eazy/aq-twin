@@ -32,18 +32,24 @@ def profile(peak):
     return w / w.mean()
 
 
-def arrivals(rng, per_day, peak, tas):
-    """Arrival times (min) over DAYS. TAS: compliant trucks spread evenly over 24 h slots."""
+def arrivals(rng, per_day, peak, tas, compliance=TAS_COMPLIANCE, open_hours=24):
+    """Arrival times (min) over DAYS. TAS: compliant trucks spread evenly over the open-hour slots.
+    open_hours < 24: the gate opens 06:00 for open_hours; all demand arrives while it is open and the
+    non-booked trucks keep the day shape of profile() inside those hours (sensitivity runs only)."""
     w = profile(peak); times = []
+    hours = range(24) if open_hours == 24 else range(6, 6 + open_hours)
+    if open_hours != 24:
+        w = w.copy(); w[list(hours)] = w[list(hours)] / w[list(hours)].mean()
     for day in range(DAYS):
-        for hr in range(24):
-            lam_free = per_day / 24 * (w[hr] * (1 - TAS_COMPLIANCE) + TAS_COMPLIANCE) if tas else per_day / 24 * w[hr]
+        for hr in hours:
+            lam_free = per_day / open_hours * (w[hr] * (1 - compliance) + compliance) if tas else per_day / open_hours * w[hr]
             n = rng.poisson(lam_free)
             times += list((day * 24 + hr) * 60 + rng.uniform(0, 60, n))
     return np.sort(times)
 
 
-def run(per_day, lanes, peak=1.8, tas=False, yard_mean=None, yard_units=YARD_UNITS, seed=0):
+def run(per_day, lanes, peak=1.8, tas=False, yard_mean=None, yard_units=YARD_UNITS, seed=0,
+        compliance=TAS_COMPLIANCE, open_hours=24):
     rng = np.random.default_rng(seed)
     env = simpy.Environment(); gate = simpy.Resource(env, lanes); yard = simpy.Resource(env, yard_units)
     rec = []
@@ -60,7 +66,7 @@ def run(per_day, lanes, peak=1.8, tas=False, yard_mean=None, yard_units=YARD_UNI
         if t0 >= WARMUP * 1440: rec.append((gw, env.now - t0))
 
     def source():
-        for t in arrivals(rng, per_day, peak, tas):
+        for t in arrivals(rng, per_day, peak, tas, compliance, open_hours):
             yield env.timeout(t - env.now); env.process(truck(t))
 
     env.process(source()); env.run()
@@ -69,9 +75,9 @@ def run(per_day, lanes, peak=1.8, tas=False, yard_mean=None, yard_units=YARD_UNI
                 turn_mean=a[:, 1].mean(), turn_p95=np.percentile(a[:, 1], 95), trucks=len(a))
 
 
-def reps(**kw):
-    rs = pd.DataFrame([run(seed=s, **kw) for s in range(REPS)])
-    m = rs.mean(); ci = 1.96 * rs.std(ddof=1) / math.sqrt(REPS)
+def reps(n=REPS, **kw):
+    rs = pd.DataFrame([run(seed=s, **kw) for s in range(n)])
+    m = rs.mean(); ci = 1.96 * rs.std(ddof=1) / math.sqrt(n)
     return {**{k: round(v, 2) for k, v in m.items()}, **{k + "_ci": round(v, 2) for k, v in ci.items()}}
 
 

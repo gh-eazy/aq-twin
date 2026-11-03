@@ -10,5 +10,8 @@
   "flagged": true,
   "jul23_per_day": 956,
   "blind_per_day": 153,
-  "real_per_day": 1032
+  "real_per_day": 1032,
+  "q1_2024_official_ratio": 0.8,
+  "causal_per_day": 765,
+  "decision_rule": "p95 + 95% CI half-width <= limit"
 }

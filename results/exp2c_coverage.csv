@@ -1,0 +1,49 @@
+series,model,design,cov80,below,above
+container_import_t,SeasonalNaive,A,0.683,0.141,0.176
+container_import_t,SeasonalNaive,B,0.639,0.156,0.205
+container_import_t,MA8,A,0.756,0.122,0.122
+container_import_t,MA8,B,0.727,0.161,0.112
+container_import_t,ETS,A,0.737,0.127,0.137
+container_import_t,ETS,B,0.698,0.171,0.132
+cargo_import_t,SeasonalNaive,A,0.79,0.102,0.107
+cargo_import_t,SeasonalNaive,B,0.78,0.107,0.112
+cargo_import_t,MA8,A,0.761,0.112,0.127
+cargo_import_t,MA8,B,0.751,0.132,0.117
+cargo_import_t,ETS,A,0.78,0.117,0.102
+cargo_import_t,ETS,B,0.766,0.127,0.107
+port_calls,SeasonalNaive,A,0.727,0.151,0.122
+port_calls,SeasonalNaive,B,0.722,0.141,0.137
+port_calls,MA8,A,0.81,0.098,0.093
+port_calls,MA8,B,0.79,0.122,0.088
+port_calls,ETS,A,0.805,0.112,0.083
+port_calls,ETS,B,0.776,0.122,0.102
+container_import_t,SeasonalNaive (saved),A,0.683,0.141,0.176
+container_import_t,MA8 (saved),A,0.756,0.122,0.122
+container_import_t,Chronos-Bolt-S,A,0.766,0.102,0.132
+container_import_t,Chronos-Bolt-B,A,0.805,0.093,0.102
+container_import_t,Chronos-2,A,0.79,0.083,0.127
+cargo_import_t,SeasonalNaive (saved),A,0.79,0.102,0.107
+cargo_import_t,MA8 (saved),A,0.761,0.112,0.127
+cargo_import_t,Chronos-Bolt-S,A,0.727,0.098,0.176
+cargo_import_t,Chronos-Bolt-B,A,0.756,0.083,0.161
+cargo_import_t,Chronos-2,A,0.795,0.068,0.137
+port_calls,SeasonalNaive (saved),A,0.727,0.151,0.122
+port_calls,MA8 (saved),A,0.81,0.098,0.093
+port_calls,Chronos-Bolt-S,A,0.805,0.083,0.112
+port_calls,Chronos-Bolt-B,A,0.829,0.073,0.098
+port_calls,Chronos-2,A,0.829,0.068,0.102
+container_import_t,SeasonalNaive (saved),B,0.639,0.156,0.205
+container_import_t,MA8 (saved),B,0.727,0.161,0.112
+container_import_t,Chronos-Bolt-S,B,0.824,0.068,0.107
+container_import_t,Chronos-Bolt-B,B,0.829,0.073,0.098
+container_import_t,Chronos-2,B,0.805,0.063,0.132
+cargo_import_t,SeasonalNaive (saved),B,0.78,0.107,0.112
+cargo_import_t,MA8 (saved),B,0.751,0.132,0.117
+cargo_import_t,Chronos-Bolt-S,B,0.776,0.073,0.151
+cargo_import_t,Chronos-Bolt-B,B,0.785,0.073,0.141
+cargo_import_t,Chronos-2,B,0.805,0.059,0.137
+port_calls,SeasonalNaive (saved),B,0.722,0.141,0.137
+port_calls,MA8 (saved),B,0.79,0.122,0.088
+port_calls,Chronos-Bolt-S,B,0.81,0.059,0.132
+port_calls,Chronos-Bolt-B,B,0.81,0.068,0.122
+port_calls,Chronos-2,B,0.829,0.059,0.112

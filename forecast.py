@@ -107,7 +107,7 @@ def residual_band(y, i, f, win=52):
     return c + np.quantile(errs, 0.1), c, c + np.quantile(errs, 0.9)
 
 
-ew_rows, alarms = [], []      # start 2021-01-03: >= 52 past one-step errors for every model (SeasonalNaive needs 52 weeks of history)
+ew_rows, alarms = [], []      # first origin 2021-01-03, first target 2021-01-10: >= 52 past one-step errors for every model (SeasonalNaive needs 52 weeks of history)
 start = W.index.get_loc(W.index[W.index >= "2021-01-03"][0])
 for s in SERIES:
     y = W[s].values; idx = W.index

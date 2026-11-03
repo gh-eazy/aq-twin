@@ -24,11 +24,15 @@ Python 3.13. Install the dependencies, then run the scripts in this order from t
 
 ```bash
 pip install -r requirements.txt
-python -P forecast.py   # accuracy (exp1) and one-step early warning (exp2)
-python -P ew4.py        # early warning with a band frozen 4 weeks ahead (exp2b)
-python -P sim.py        # gate simulation grid and sensitivity
-python -P loop.py       # trust check and lane decisions
-python -P figures.py    # figures/fig1-3
+python -P forecast.py    # accuracy (exp1) and one-step early warning (exp2)
+python -P ew4.py         # early warning with a band frozen 4 weeks ahead (exp2b)
+python -P ew5.py         # ETS in both designs, coverage, matched false-alarm rate, K sweep (exp2c, no Chronos re-run)
+python -P sim.py         # gate simulation grid and sensitivity
+python -P loop.py        # blind, causal and oracle plans; lane and TAS effects
+python -P cliff.py       # where the 2-lane, no-TAS plan stops meeting the limit
+python -P gate_sens.py   # TAS benefit under a 16 h gate and lower compliance
+python -P trust.py       # AIS noise, tolerance and the check on every official figure
+python -P figures.py     # figures/fig1-3
 ```
 
 Each script writes to `results/` (CSV and JSON) or `figures/`. The committed `results/` are the values reported in the paper. Chronos weights download from Hugging Face on first run (`amazon/chronos-bolt-small`, `amazon/chronos-bolt-base`, `amazon/chronos-2`). Seeds are fixed; Chronos on CPU can differ in the last digit across machines.
@@ -41,4 +45,8 @@ Each script writes to `results/` (CSV and JSON) or `figures/`. The committed `re
 | `ew4.py` | alarms from a band frozen 4 weeks ahead |
 | `sim.py` | SimPy gate model (lanes, service time, yard time, TAS compliance), 20 replications per case |
 | `loop.py` | AIS vs official ratio check, then the lane rule for each demand scenario |
+| `ew5.py` | ETS in the alarm test, band coverage per design, matched false-alarm comparison |
+| `cliff.py` | 2-lane, no-TAS wait between the causal plan demand and the real demand |
+| `gate_sens.py` | fewest lanes under a shorter gate day and lower TAS compliance |
+| `trust.py` | AIS noise in stable windows, false-flag rate per tolerance, check on each official figure |
 | `figures.py` | the three figures |

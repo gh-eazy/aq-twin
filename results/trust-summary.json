@@ -1,0 +1,19 @@
+{
+  "stable_windows": [
+    [
+      "2021-07-01",
+      "2023-11-12"
+    ],
+    [
+      "2025-04-01",
+      "2026-10-18"
+    ]
+  ],
+  "series": "container_import_t (AIS container import tonnes)",
+  "calibrated_tolerance_q95": {
+    "month": 0.98,
+    "quarter": 0.56,
+    "nine months": 0.27,
+    "year": 0.19
+  }
+}

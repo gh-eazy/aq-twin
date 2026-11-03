@@ -1,0 +1,7 @@
+per_day,lanes,tas,reps,gate_wait_p95,gate_wait_p95_ci,meets_limit
+765,2,False,10,5.34,0.85,True
+800,2,False,10,7.49,0.59,True
+850,2,False,10,11.87,2.23,False
+900,2,False,10,19.88,3.16,False
+956,2,False,10,35.85,5.41,False
+1032,2,False,10,57.08,6.09,False

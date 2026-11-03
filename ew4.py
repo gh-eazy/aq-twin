@@ -26,7 +26,7 @@ rows, alarms = [], []
 yrs = sum((pd.Timestamp(b) - pd.Timestamp(a)).days for a, b in STABLE) / 365.25
 for s in SERIES:
     y = W[s].values; idx = W.index
-    start = idx.get_loc(idx[idx >= "2021-01-03"][0]) - K + 1      # first target week 2021-01-03, as in design A
+    start = idx.get_loc(idx[idx >= "2021-01-03"][0]) - K + 1      # first target week 2021-01-10, as in design A
     origins = list(range(start, len(y) - K))
     bands = {n: np.array([band_k(y, i, CLASSIC[n]) for i in origins]) for n in ["SeasonalNaive", "MA8"]}
     for n, p in CHRONOS.items():
