@@ -1,13 +1,10 @@
 {
   "p95_limit_min": 10.0,
-  "tolerance": 0.25,
   "ais_ratio_jul24_vs_jul23": {
     "portcalls_container": 0.281,
     "import_container": 0.16
   },
   "official_ratio_jul24_vs_jul23": 1.08,
-  "gap": 0.92,
-  "flagged": true,
   "jul23_per_day": 956,
   "blind_per_day": 153,
   "real_per_day": 1032,

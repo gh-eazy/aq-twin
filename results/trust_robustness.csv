@@ -1,0 +1,16 @@
+test,aggregation,n,log_tol,arith_tol
+calendar months,month,22,0.64,
+first window starts 2021-07-01,year,20,0.18,0.19
+first window starts 2021-07-01,nine months,33,0.24,0.27
+first window starts 2021-01-01,year,46,0.45,0.58
+first window starts 2021-01-01,nine months,59,0.52,0.69
+first window starts 2020-07-01,year,72,0.61,0.84
+first window starts 2020-07-01,nine months,85,0.71,1.04
+March 2026 left out,month,93,0.68,
+first stable window only,month,68,0.61,
+March 2026 left out,quarter,75,0.44,
+first stable window only,quarter,59,0.37,
+March 2026 left out,nine months,33,0.24,
+first stable window only,nine months,33,0.24,
+March 2026 left out,year,20,0.18,
+first stable window only,year,20,0.18,

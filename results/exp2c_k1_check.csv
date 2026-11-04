@@ -1,0 +1,10 @@
+series,model,errors_53,errors_52
+container_import_t,SeasonalNaive,7,6
+container_import_t,MA8,2,2
+container_import_t,ETS,4,3
+cargo_import_t,SeasonalNaive,2,2
+cargo_import_t,MA8,2,2
+cargo_import_t,ETS,2,2
+port_calls,SeasonalNaive,4,5
+port_calls,MA8,2,2
+port_calls,ETS,3,3

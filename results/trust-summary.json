@@ -10,7 +10,13 @@
     ]
   ],
   "series": "container_import_t (AIS container import tonnes)",
-  "calibrated_tolerance_q95": {
+  "log_tolerance_q95": {
+    "month": 0.68,
+    "quarter": 0.44,
+    "nine months": 0.24,
+    "year": 0.18
+  },
+  "arithmetic_tolerance_q95": {
     "month": 0.98,
     "quarter": 0.56,
     "nine months": 0.27,

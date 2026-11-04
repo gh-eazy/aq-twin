@@ -31,12 +31,12 @@ def fewest(per_day, tas, open_hours, compliance):
 
 
 rows, no_tas = [], {}
-for name, dem in S["scenarios"].items():
+for name, dem in g["SCEN"].items():
     for oh, comp in REGIMES:
         if oh not in no_tas:
             no_tas[oh] = fewest(dem, False, oh, comp)
         l0, r0 = no_tas[oh]; l1, r1 = fewest(dem, True, oh, comp)
-        rows.append(dict(scenario=name, per_day=dem, open_hours=oh, compliance=comp, reps=N_REPS,
+        rows.append(dict(scenario=name, per_day=round(dem), open_hours=oh, compliance=comp, reps=N_REPS,
                          lanes_no_tas=l0, p95_no_tas=r0["gate_wait_p95"], lanes_tas=l1, p95_tas=r1["gate_wait_p95"],
                          lanes_saved=(l0 - l1) if l0 and l1 else None))
         print(rows[-1])

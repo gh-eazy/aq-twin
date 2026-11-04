@@ -34,7 +34,7 @@ fig.tight_layout(pad=0.3); fig.savefig(OUT / "fig1-warning.png"); plt.close(fig)
 
 # ---------- fig 2
 g = pd.read_csv(R / "sim_grid.csv")
-fig, ax = plt.subplots(figsize=(3.3, 2.7), dpi=300)
+fig, ax = plt.subplots(figsize=(3.3, 2.45), dpi=300)
 for sc, c in [("S1 Jul-2024 (calibration)", GREY), ("S4 Dec-2025 record", BLUE), ("S5 stress +30% on S4", ORANGE)]:
     for tas, ls in [(False, "-"), (True, "--")]:
         s = g[(g.scenario == sc) & (g.tas == tas) & (g.lanes <= 6) & (g.gate_wait_p95 >= 0.1)]   # < 0.1 min = no queue
@@ -45,7 +45,7 @@ ax.set_yscale("log"); ax.set_ylim(0.1, 2000); ax.set_xticks(range(2, 7))
 ax.set_xlabel("gate lanes"); ax.set_ylabel("p95 gate wait (min)")
 ax.legend(frameon=False, fontsize=7, ncol=2, loc="upper center", bbox_to_anchor=(0.5, -0.27), handlelength=2.4,
           columnspacing=1.0)
-fig.tight_layout(pad=0.3); fig.savefig(OUT / "fig2-gate.png"); plt.close(fig)
+fig.tight_layout(pad=0.3); fig.savefig(OUT / "fig2-gate.png", bbox_inches="tight", pad_inches=0.03); plt.close(fig)
 
 # ---------- fig 3
 t = pd.read_csv(R / "loop_trust.csv")
@@ -54,10 +54,10 @@ name = {"blind (AIS only)": "AIS only", "causal (Q1-2024 official)": "Q1-2024 of
         "oracle (Jul-2024 official)": "Jul-2024 official (oracle)", "fixed 3 lanes": "fixed plan"}
 lab = [f"{name[r.twin]}" + (f": {int(r.planned_per_day):,}/day" if pd.notna(r.planned_per_day) else "")
        + f"\n→ {r.lanes} lanes{' + TAS' if r.tas else ', no TAS'}" for r in t.itertuples()]
-fig, ax = plt.subplots(figsize=(3.3, 1.9), dpi=300)
+fig, ax = plt.subplots(figsize=(3.3, 1.7), dpi=300)
 ax.barh(lab, t.actual_gate_wait_p95, color=[ORANGE, ORANGE, BLUE, GREY], xerr=t.actual_gate_wait_p95_ci, error_kw={"lw": 0.6})
 ax.axvline(10, color=INK, lw=0.5, ls=":")
-for i, v in enumerate(t.actual_gate_wait_p95): ax.text(max(v + t.actual_gate_wait_p95_ci[i] + 2, 12), i, f"{v:.1f} min", va="center")
+for i, v in enumerate(t.actual_gate_wait_p95): ax.text(max(v + t.actual_gate_wait_p95_ci[i] + 2, 12), i, f"{v:.1f} min" if v >= 10 else f"{v:.2f} min", va="center")
 ax.text(10.5, -0.6, "10 min limit", fontsize=7, va="center")
 ax.set_xlim(0, 80); ax.set_xlabel(f"p95 gate wait (min) at {t.actual_per_day[0]:,} trucks/day")
 ax.invert_yaxis()

@@ -1,0 +1,25 @@
+case,source,per_day,pmr,tas,load,formula_lanes,sim_lanes,match
+S1,grid,1032,1.8,False,2.37,3,3,True
+S1,grid,1032,1.16,True,1.52,2,2,True
+S2,grid,1036,1.8,False,2.37,3,3,True
+S2,grid,1036,1.16,True,1.53,2,2,True
+S3,grid,1211,1.8,False,2.78,3,3,True
+S3,grid,1211,1.16,True,1.79,2,2,True
+S4,grid,1305,1.8,False,2.99,3,4,False
+S4,grid,1305,1.16,True,1.93,2,3,False
+S5,grid,1696,1.8,False,3.89,4,4,True
+S5,grid,1696,1.16,True,2.5,3,3,True
+S3,peak sweep,1211,1.4,False,2.16,3,3,True
+S3,peak sweep,1211,1.8,False,2.78,3,3,True
+S3,peak sweep,1211,2.2,False,3.39,4,4,True
+S3,peak sweep,1211,2.6,False,4.01,5,5,True
+S1,compliance 0.65,1032,1.28,True,1.68,2,2,True
+S2,compliance 0.65,1036,1.28,True,1.69,2,2,True
+S3,compliance 0.65,1211,1.28,True,1.97,2,3,False
+S4,compliance 0.65,1305,1.28,True,2.13,3,3,True
+S5,compliance 0.65,1696,1.28,True,2.76,3,3,True
+S1,compliance 0.5,1032,1.4,True,1.84,2,3,False
+S2,compliance 0.5,1036,1.4,True,1.85,2,3,False
+S3,compliance 0.5,1211,1.4,True,2.16,3,3,True
+S4,compliance 0.5,1305,1.4,True,2.33,3,3,True
+S5,compliance 0.5,1696,1.4,True,3.02,4,4,True

@@ -8,6 +8,9 @@
 3. Matched false-alarm rate: for each classic model, lower the low-side error quantile (0.10 -> 0) until the
    stable low-side false-alarm rate is <= that of Chronos-2 in the same series and design; report the delay.
 4. Freeze length sweep K = 1, 2, 4, 6, 8 for the classic baselines only (Chronos is run at K = 4 only).
+5. Matched false-alarm rate against EACH Chronos model, with and without alarm weeks of March-April 2026
+   (a second shock inside stable window 2), from the saved bands: results/exp2c_matched_by_ref.csv.
+6. K = 1 with 52 errors instead of 53, to explain why it differs from design A: results/exp2c_k1_check.csv.
 Classic forecasts are cached once per origin up to 8 weeks ahead.
 
 Run: python -P ew5.py   (writes results/exp2c_*.csv)
@@ -57,7 +60,21 @@ def score(obs, lo, hi, weeks):
     return out
 
 
-ew, cov, matched = [], [], []
+QGRID = (0.10, 0.08, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01, 0.0)
+CHRONOS = ["Chronos-Bolt-S", "Chronos-Bolt-B", "Chronos-2"]
+
+
+def n_stable(fire, drop_second_shock):
+    """Alarm weeks inside the stable windows; optionally without March-April 2026."""
+    return sum(in_stable(w) and not (drop_second_shock and pd.Timestamp("2026-03-01") <= w <= pd.Timestamp("2026-04-30")) for w in fire)
+
+
+def delay_of(fire):
+    after = [w for w in fire if CRISIS <= w < pd.Timestamp(STABLE[1][0])]
+    return (after[0] - CRISIS).days / 7 if after else np.nan
+
+
+ew, cov, matched, by_ref, k1 = [], [], [], [], []
 for s in SERIES:
     y = W[s].values; idx = W.index; n = len(y)
     F = {m: {j: f(y[:j + 1], HMAX) for j in range(51, n)} for m, f in MODELS.items()}   # cached forecasts
@@ -89,12 +106,34 @@ for s in SERIES:
             # matched false-alarm rate against Chronos-2 (same series and design)
             ref = pd.read_csv(OUT / f"{'exp2' if dsg == 'A' else 'exp2b'}_early_warning.csv")
             target = float(ref.query("series == @s and model == 'Chronos-2' and side == 'down'").false_alarms_per_year.iloc[0])
-            for q in (0.10, 0.08, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01, 0.0):
+            for q in QGRID:
                 lo_q = c + np.array([np.quantile(e, q) for e in errs]); sq = score(obs, lo_q, hi, weeks)["down"]
                 if sq["fa"] <= target: break
             matched.append(dict(series=s, model=m, design=dsg, chronos2_fa=target, low_quantile=q, fa=sq["fa"],
                                 reached=bool(sq["fa"] <= target), delay_weeks=sq["delay"], first_alarm_after_crisis=sq["first"],
                                 first_alarm_before_2025_04_01=sq["in_crisis"]))
+            # matched against each Chronos model, from the saved bands
+            b = pd.read_csv(OUT / f"{'exp2' if dsg == 'A' else 'exp2b'}_bands_{s}.csv", parse_dates=["week"])
+            for ref in CHRONOS:
+                rw = alarms((b.obs.values < b[f"{ref}_lo"].values), pd.DatetimeIndex(b.week))
+                rd = delay_of(rw)
+                for drop, tag in [(False, "all"), (True, "without Mar-Apr 2026")]:
+                    tgt = n_stable(rw, drop)
+                    for q in QGRID:
+                        lo_q = c + np.array([np.quantile(e, q) for e in errs]); fq = alarms(obs < lo_q, weeks)
+                        if n_stable(fq, drop) <= tgt: break
+                    by_ref.append(dict(series=s, model=m, design=dsg, reference=ref, stable_alarm_weeks=tag, ref_alarm_weeks=tgt,
+                                       ref_delay=rd, low_quantile=q, model_alarm_weeks=n_stable(fq, drop),
+                                       reached=bool(n_stable(fq, drop) <= tgt), model_delay=delay_of(fq)))
+            base = c + np.array([np.quantile(e, 0.1) for e in errs])
+            by_ref.append(dict(series=s, model=m, design=dsg, reference="unmatched (q = 0.10)", stable_alarm_weeks="all",
+                               ref_alarm_weeks=None, ref_delay=None, low_quantile=0.1,
+                               model_alarm_weeks=n_stable(alarms(obs < base, weeks), False), reached=True,
+                               model_delay=delay_of(alarms(obs < base, weeks))))
+        if dsg == "B" and K == 1:   # same band with 52 errors, as in design A
+            e52 = [e[-52:] for e in errs]; l52 = c + np.array([np.quantile(e, 0.1) for e in e52])
+            k1.append(dict(series=s, model=m, errors_53=n_stable(alarms(obs < lo, weeks), False),
+                           errors_52=n_stable(alarms(obs < l52, weeks), False)))
     print("ew5", s, "done")
 
 # Chronos coverage from the saved bands (Experiment 2 CSVs)
@@ -111,6 +150,8 @@ for dsg, pre in [("A", "exp2"), ("B", "exp2b")]:
 ew = pd.DataFrame(ew); ew.to_csv(OUT / "exp2c_early_warning.csv", index=False)
 cov = pd.DataFrame(cov); cov.to_csv(OUT / "exp2c_coverage.csv", index=False)
 pd.DataFrame(matched).to_csv(OUT / "exp2c_matched.csv", index=False)
+pd.DataFrame(by_ref).to_csv(OUT / "exp2c_matched_by_ref.csv", index=False)
+pd.DataFrame(k1).to_csv(OUT / "exp2c_k1_check.csv", index=False)
 
 # reproduction check: SeasonalNaive and MA8 must match the published tables
 for dsg, pre in [("A", "exp2"), ("B", "exp2b")]:
@@ -126,4 +167,5 @@ for dsg, pre in [("A", "exp2"), ("B", "exp2b")]:
 print("reproduction check done")
 print(ew.query("side == 'down'").to_string(index=False))
 print(cov.to_string(index=False))
-print(pd.DataFrame(matched).to_string(index=False))
+print(pd.DataFrame(by_ref).to_string(index=False))
+print(pd.DataFrame(k1).to_string(index=False))

@@ -81,16 +81,7 @@ def reps(n=REPS, **kw):
     return {**{k: round(v, 2) for k, v in m.items()}, **{k + "_ci": round(v, 2) for k, v in ci.items()}}
 
 
-# ---------- calibration: yard handling mean so that turnaround == 30 min at July-2024 demand, 4 lanes, peak 1.8
 BASE_DAY = 32000 / 31
-lo, hi = 5.0, 30.0
-for _ in range(14):
-    mid = (lo + hi) / 2
-    t = np.mean([run(BASE_DAY, 4, yard_mean=mid, seed=s)["turn_mean"] for s in range(6)])
-    lo, hi = (mid, hi) if t < 30 else (lo, mid)
-YARD_MEAN = round((lo + hi) / 2, 2)
-print("calibrated yard handling mean (min):", YARD_MEAN)
-
 # ---------- demand scenarios (truck visits/day), from opened official figures
 SCEN = {
     "S1 Jul-2024 (calibration)": BASE_DAY,
@@ -99,6 +90,15 @@ SCEN = {
     "S4 Dec-2025 record": 96060 * VISITS_PER_TEU / 31,
     "S5 stress +30% on S4": 1.3 * 96060 * VISITS_PER_TEU / 31,
 }
+# ---------- calibration: yard handling mean so that turnaround == 30 min at July-2024 demand, 4 lanes, peak 1.8
+lo, hi = 5.0, 30.0
+for _ in range(14):
+    mid = (lo + hi) / 2
+    t = np.mean([run(BASE_DAY, 4, yard_mean=mid, seed=s)["turn_mean"] for s in range(6)])
+    lo, hi = (mid, hi) if t < 30 else (lo, mid)
+YARD_MEAN = round((lo + hi) / 2, 2)
+print("calibrated yard handling mean (min):", YARD_MEAN)
+
 rows = []
 for name, dem in SCEN.items():
     for lanes in range(2, 9):

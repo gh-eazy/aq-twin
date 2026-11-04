@@ -1,9 +1,9 @@
-period,published,r_ais,r_official,gap,flag_at_0_25,calibrated_tolerance,flag_calibrated
-2023 vs 2022,2024-10-02,0.995,1.054,0.06,False,0.19,False
-Q1 2024,2024-04-15,0.524,0.8,0.28,True,0.56,False
-Jul 2024,2024-08-21,0.16,1.08,0.92,True,0.98,False
-Nov 2024,2025-01-13,0.42,1.157,0.74,True,0.98,False
-Dec 2024,2025-01-13,1.088,1.287,0.2,False,0.98,False
-2024 vs 2023,2025-01-13,0.334,0.96,0.63,True,0.19,True
-2025 vs 2024,2025-12-30,3.565,1.22,2.34,True,0.19,True
-9M 2026,2026-10-21,1.158,1.066,0.09,False,0.27,False
+period,published,r_ais,r_official,log_gap,log_tol,log_flag,arith_gap,arith_tol,arith_flag,flag_at_0_25
+2023 vs 2022,2024-10-02,0.995,1.054,0.06,0.18,False,0.06,0.19,False,False
+Q1 2024,2024-04-15,0.524,0.8,0.42,0.44,False,0.28,0.56,False,True
+Jul 2024,2024-08-21,0.16,1.08,1.91,0.68,True,0.92,0.98,False,True
+Nov 2024,2025-01-13,0.42,1.157,1.01,0.68,True,0.74,0.98,False,True
+Dec 2024,2025-01-13,1.088,1.287,0.17,0.68,False,0.2,0.98,False,False
+2024 vs 2023,2025-01-13,0.334,0.96,1.06,0.18,True,0.63,0.19,True,True
+2025 vs 2024,2025-12-30,3.565,1.22,1.07,0.18,True,2.34,0.19,True,True
+9M 2026,2026-10-21,1.158,1.066,0.08,0.24,False,0.09,0.27,False,False
